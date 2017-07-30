@@ -1,8 +1,22 @@
 ul.nav.nav-list
-    each value, key in theme.menu
-        li.nav-list-item
-            - var re = /^(http|https):\/\/*/gi;
-            - var tar = re.test(value) ? "_blank" : "_self"
-            - var act = !re.test(value) && "/"+page.current_url === value
-            a.nav-list-link(class={active: act} href=url_for(value) target=tar)
-                != key.toUpperCase()
+  each value, key in theme.menu
+    li.nav-list-item
+      - var re = /^(http|https):\/\/*/gi;
+      - var tar = re.test(value) ? "_blank" : "_self"
+      - var arr = page.path.split('/');
+      - console.log(arr, value);
+      - var act = !re.test(value) && "/"+(arr.length > 1 ? arr[0]+"/" : "") === value
+      a.nav-list-link(class={active: act} href=url_for(value) target=tar)
+        case key
+          when "Blog"
+            i.fa.fa-home
+              != key.toUpperCase()
+          when "Archive"
+            i.fa.fa-list
+              != key.toUpperCase()
+          when "About"
+            i.fa.fa-user
+              != key.toUpperCase()
+          when "GitHub"
+            i.fa.fa-github
+              != key.toUpperCase()
